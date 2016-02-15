@@ -12,18 +12,17 @@ RUN apk update && \
     $BUILD_PACKAGES \
     libxml2-dev \
     libxslt-dev && \
-    gem install nokogiri -- --use-system-libraries && \
-    rm -rf /var/cache/apk/*
-
-# Install current version of Rails
-RUN gem install --no-ri --no-rdoc rails -v 4.2.5.1 && \
+    rm -rf /var/cache/apk/* && \
     mkdir -p /usr/src/app
 
-# Copy the app into the working directory
+# Copy the app into the working directory. This assumes your Gemfile
+# is in the root directory and includes your version of Rails that you
+# want to run.
 ONBUILD WORKDIR /usr/src/app
 ONBUILD COPY . /usr/src/app
 ONBUILD EXPOSE 3000
-ONBUILD RUN bundle install && \
+ONBUILD RUN bundle config build.nokogiri --use-system-libraries && \
+            bundle install && \
             bundle clean
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
