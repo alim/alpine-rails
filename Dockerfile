@@ -1,17 +1,18 @@
 FROM ruby:2.3-alpine
 MAINTAINER Andy Lim <alim@nspartners.com>
 
-ENV BUILD_PACKAGES curl-dev ruby-dev build-base
+ENV BUILD_PACKAGES="curl-dev ruby-dev build-base bash" \
+    DEV_PACKAGES="zlib-dev libxml2-dev libxslt-dev tzdata yaml-dev sqlite-dev postgresql-dev mysql-dev" \
+    RUBY_PACKAGES="ruby-json yaml nodejs"
 
 # Update and install base packages and nokogiri gem that requires a
 # native compilation
 RUN apk update && \
     apk upgrade && \
     apk add --update\
-    bash \
     $BUILD_PACKAGES \
-    libxml2-dev \
-    libxslt-dev && \
+    $DEV_PACKAGES \
+    $RUBY_PACKAGES && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /usr/src/app
 

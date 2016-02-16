@@ -7,7 +7,7 @@ half the size of the official Rails container. The Dockerfile sets up the
 necessary libraries needed to install Rails and its dependencies, but *does not*
 actually install Rails. It is designed to be used as a parent Docker file
 for your Rails application.  This approach keeps the container smaller and
-will only bundle in the Ruby Gems specified by your Rails application.
+will only bundling in the Ruby Gems specified by your Rails application.
 
 # Usage
 
